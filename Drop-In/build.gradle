@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'de.marcphilipp.nexus-publish'
-    id 'signing'
+    //id 'signing'
 }
 apply plugin: 'kotlin-android'
 
@@ -103,12 +103,12 @@ artifacts {
     archives sourcesJar
 }
 
-signing {
-    required {
-        !version.endsWith("SNAPSHOT") && !version.endsWith("DEVELOPMENT")
-    }
-    sign publishing.publications
-}
+// signing {
+//     required {
+//         !version.endsWith("SNAPSHOT") && !version.endsWith("DEVELOPMENT")
+//     }
+//     sign publishing.publications
+// }
 
 nexusPublishing {
     // give nexus sonatype more time to initialize the staging repository

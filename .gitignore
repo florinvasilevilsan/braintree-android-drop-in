@@ -6,4 +6,6 @@ Gemfile.lock
 .bundle
 *.iml
 build
-captures
+Demo/\.idea
+Demo/local.properties
+Demo/local.properties

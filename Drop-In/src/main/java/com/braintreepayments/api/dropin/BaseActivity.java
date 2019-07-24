@@ -3,6 +3,7 @@ package com.braintreepayments.api.dropin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.braintreepayments.api.BraintreeFragment;
 import com.braintreepayments.api.exceptions.InvalidArgumentException;
@@ -10,6 +11,7 @@ import com.braintreepayments.api.models.Authorization;
 import com.braintreepayments.api.models.ClientToken;
 import com.braintreepayments.api.models.Configuration;
 import com.braintreepayments.api.models.PaymentMethodNonce;
+
 
 import org.json.JSONException;
 
