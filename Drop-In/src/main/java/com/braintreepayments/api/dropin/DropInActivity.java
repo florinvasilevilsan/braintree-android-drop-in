@@ -431,31 +431,31 @@ public class DropInActivity extends BaseActivity implements ConfigurationListene
         mBraintreeFragment.sendAnalyticsEvent("manager.appeared");
     }
 
-    private void showVaultedPaymentMethods(List<PaymentMethodNonce> paymentMethodNonces, boolean googlePayEnabled) {
-        mSupportedPaymentMethodsHeader.setText(R.string.bt_other);
-        mVaultedPaymentMethodsContainer.setVisibility(View.VISIBLE);
+    // private void showVaultedPaymentMethods(List<PaymentMethodNonce> paymentMethodNonces, boolean googlePayEnabled) {
+    //     mSupportedPaymentMethodsHeader.setText(R.string.bt_other);
+    //     mVaultedPaymentMethodsContainer.setVisibility(View.VISIBLE);
 
-        VaultedPaymentMethodsAdapter vaultedPaymentMethodsAdapter = new VaultedPaymentMethodsAdapter(new PaymentMethodNonceCreatedListener() {
-            @Override
-            public void onPaymentMethodNonceCreated(PaymentMethodNonce paymentMethodNonce) {
-                if (paymentMethodNonce instanceof CardNonce) {
-                    mBraintreeFragment.sendAnalyticsEvent("vaulted-card.select");
-                }
+    //     VaultedPaymentMethodsAdapter vaultedPaymentMethodsAdapter = new VaultedPaymentMethodsAdapter(new PaymentMethodNonceCreatedListener() {
+    //         @Override
+    //         public void onPaymentMethodNonceCreated(PaymentMethodNonce paymentMethodNonce) {
+    //             if (paymentMethodNonce instanceof CardNonce) {
+    //                 mBraintreeFragment.sendAnalyticsEvent("vaulted-card.select");
+    //             }
 
-                DropInActivity.this.onPaymentMethodNonceCreated(paymentMethodNonce);
-            }
-        }, paymentMethodNonces);
+    //             DropInActivity.this.onPaymentMethodNonceCreated(paymentMethodNonce);
+    //         }
+    //     }, paymentMethodNonces);
 
-        vaultedPaymentMethodsAdapter.setup(
-                this, mConfiguration, mDropInRequest, googlePayEnabled, mClientTokenPresent);
-        mVaultedPaymentMethodsView.setAdapter(vaultedPaymentMethodsAdapter);
+    //     vaultedPaymentMethodsAdapter.setup(
+    //             this, mConfiguration, mDropInRequest, googlePayEnabled, mClientTokenPresent);
+    //     mVaultedPaymentMethodsView.setAdapter(vaultedPaymentMethodsAdapter);
 
-        if (mDropInRequest.isVaultManagerEnabled()) {
-            mVaultManagerButton.setVisibility(View.VISIBLE);
-        }
+    //     if (mDropInRequest.isVaultManagerEnabled()) {
+    //         mVaultManagerButton.setVisibility(View.VISIBLE);
+    //     }
 
-        if (vaultedPaymentMethodsAdapter.hasCardNonce()) {
-            mBraintreeFragment.sendAnalyticsEvent("vaulted-card.appear");
-        }
-    }
+    //     if (vaultedPaymentMethodsAdapter.hasCardNonce()) {
+    //         mBraintreeFragment.sendAnalyticsEvent("vaulted-card.appear");
+    //     }
+    // }
 }
