@@ -7,3 +7,6 @@ Gemfile.lock
 *.iml
 build
 captures
+Demo/\.idea
+Demo/local.properties
+Demo/local.properties
