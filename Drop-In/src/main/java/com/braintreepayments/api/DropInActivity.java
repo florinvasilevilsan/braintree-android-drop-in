@@ -2,6 +2,8 @@ package com.braintreepayments.api;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -14,8 +16,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.braintreepayments.api.dropin.R;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.util.List;
 
 public class DropInActivity extends AppCompatActivity {
 
@@ -38,6 +38,8 @@ public class DropInActivity extends AppCompatActivity {
 
     @VisibleForTesting
     AlertPresenter alertPresenter;
+
+    boolean isUserCanceledSet = false;
 
     @Override
     protected void onResume() {
@@ -447,12 +449,36 @@ public class DropInActivity extends AppCompatActivity {
 
     private void onDropInResult(DropInResult dropInResult, Exception error) {
         if (dropInResult != null) {
+            isUserCanceledSet = false;
             animateBottomSheetClosedAndFinishDropInWithResult(dropInResult);
-        } else if (error instanceof UserCanceledException) {
-            dropInViewModel.setUserCanceledError(error);
         } else {
-            onError(error);
+            if (error instanceof UserCanceledException) {
+                dropInViewModel.setUserCanceledError(error);
+
+                if (((UserCanceledException) error).isExplicitCancelation()) {
+                    hideBottomSheetAfterDelay(false);
+                } else {
+                    isUserCanceledSet = true;
+                    hideBottomSheetAfterDelay(true);
+                }
+            } else {
+                onError(error);
+                hideBottomSheetAfterDelay(false);
+            }
         }
+    }
+
+    private void hideBottomSheetAfterDelay(boolean shouldCheckIfCancelled) {
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isBottomSheetVisible() && isUserCanceledSet) {
+                    isUserCanceledSet = false;
+                    dropInViewModel.setBottomSheetState(BottomSheetState.HIDE_REQUESTED);
+                }
+            }
+        }, shouldCheckIfCancelled ? 5000 : 500);
     }
 
     private void onVaultedPaymentMethodSelected(DropInEvent event) {
