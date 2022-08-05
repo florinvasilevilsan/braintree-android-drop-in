@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -39,7 +40,7 @@ public class DropInActivity extends AppCompatActivity {
     @VisibleForTesting
     AlertPresenter alertPresenter;
 
-    boolean isUserCanceledSet = false;
+    boolean isPaymentFlow = false;
 
     @Override
     protected void onResume() {
@@ -449,20 +450,24 @@ public class DropInActivity extends AppCompatActivity {
 
     private void onDropInResult(DropInResult dropInResult, Exception error) {
         if (dropInResult != null) {
-            isUserCanceledSet = false;
+            isPaymentFlow = true;
+            //Log.d("SigmaSportsLog", " -- DropIn Result received");
             animateBottomSheetClosedAndFinishDropInWithResult(dropInResult);
         } else {
+            isPaymentFlow = false;
             if (error instanceof UserCanceledException) {
                 dropInViewModel.setUserCanceledError(error);
 
                 if (((UserCanceledException) error).isExplicitCancelation()) {
+                    //Log.d("SigmaSportsLog", " -- Explicit cancel");
                     hideBottomSheetAfterDelay(false);
                 } else {
-                    isUserCanceledSet = true;
+                    //Log.d("SigmaSportsLog", " -- Assumed cancel");
                     hideBottomSheetAfterDelay(true);
                 }
             } else {
                 onError(error);
+                //Log.d("SigmaSportsLog", " -- different Error");
                 hideBottomSheetAfterDelay(false);
             }
         }
@@ -473,8 +478,11 @@ public class DropInActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (isBottomSheetVisible() && isUserCanceledSet) {
-                    isUserCanceledSet = false;
+                // Log.d(
+                //         "SigmaSportsLog",
+                //         "Running animation isBottomSheetVisible: " + (isBottomSheetVisible() ? "true" : "false") + ", isUserCanceledSet:" + (isPaymentFlow ? "true" : "false")
+                // );
+                if (isBottomSheetVisible() && !isPaymentFlow) {
                     dropInViewModel.setBottomSheetState(BottomSheetState.HIDE_REQUESTED);
                 }
             }
