@@ -2,6 +2,8 @@ package com.braintreepayments.api;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -36,6 +38,8 @@ public class DropInActivity extends AppCompatActivity {
 
     @VisibleForTesting
     AlertPresenter alertPresenter;
+
+    boolean isPaymentFlow = false;
 
     @Override
     protected void onResume() {
@@ -451,12 +455,35 @@ public class DropInActivity extends AppCompatActivity {
 
     private void onDropInResult(DropInResult dropInResult, Exception error) {
         if (dropInResult != null) {
+            isPaymentFlow = true;
             animateBottomSheetClosedAndFinishDropInWithResult(dropInResult);
-        } else if (error instanceof UserCanceledException) {
-            dropInViewModel.setUserCanceledError(error);
         } else {
-            onError(error);
+            isPaymentFlow = false;
+            if (error instanceof UserCanceledException) {
+                dropInViewModel.setUserCanceledError(error);
+
+                if (((UserCanceledException) error).isExplicitCancelation()) {
+                    hideBottomSheetAfterDelay(false);
+                } else {
+                    hideBottomSheetAfterDelay(true);
+                }
+            } else {
+                onError(error);
+                hideBottomSheetAfterDelay(false);
+            }
         }
+    }
+
+    private void hideBottomSheetAfterDelay(boolean shouldCheckIfCancelled) {
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isBottomSheetVisible() && !isPaymentFlow) {
+                    dropInViewModel.setBottomSheetState(BottomSheetState.HIDE_REQUESTED);
+                }
+            }
+        }, shouldCheckIfCancelled ? 5000 : 500);
     }
 
     private void onVaultedPaymentMethodSelected(DropInEvent event) {

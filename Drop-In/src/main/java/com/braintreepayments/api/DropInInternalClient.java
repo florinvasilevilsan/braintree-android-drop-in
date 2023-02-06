@@ -298,26 +298,26 @@ class DropInInternalClient {
             availablePaymentMethods.add(DropInPaymentMethod.PAYPAL);
         }
 
-        if (!dropInRequest.isVenmoDisabled() && configuration.isVenmoEnabled() && venmoClient.isVenmoAppSwitchAvailable(context)) {
-            availablePaymentMethods.add(DropInPaymentMethod.VENMO);
-        }
+        // if (!dropInRequest.isVenmoDisabled() && configuration.isVenmoEnabled() && venmoClient.isVenmoAppSwitchAvailable(context)) {
+        //     availablePaymentMethods.add(DropInPaymentMethod.VENMO);
+        // }
 
-        if (!dropInRequest.isCardDisabled()) {
-            Set<String> supportedCardTypes =
-                    new HashSet<>(configuration.getSupportedCardTypes());
-            if (!configuration.isUnionPayEnabled()) {
-                supportedCardTypes.remove(CARD_TYPE_UNION_PAY);
-            }
-            if (supportedCardTypes.size() > 0) {
-                availablePaymentMethods.add(DropInPaymentMethod.UNKNOWN);
-            }
-        }
+        // if (!dropInRequest.isCardDisabled()) {
+        //     Set<String> supportedCardTypes =
+        //             new HashSet<>(configuration.getSupportedCardTypes());
+        //     if (!configuration.isUnionPayEnabled()) {
+        //         supportedCardTypes.remove(CARD_TYPE_UNION_PAY);
+        //     }
+        //     if (supportedCardTypes.size() > 0) {
+        //         availablePaymentMethods.add(DropInPaymentMethod.UNKNOWN);
+        //     }
+        // }
 
-        if (showGooglePay) {
-            if (!dropInRequest.isGooglePayDisabled()) {
-                availablePaymentMethods.add(DropInPaymentMethod.GOOGLE_PAY);
-            }
-        }
+        // if (showGooglePay) {
+        //     if (!dropInRequest.isGooglePayDisabled()) {
+        //         availablePaymentMethods.add(DropInPaymentMethod.GOOGLE_PAY);
+        //     }
+        // }
         return availablePaymentMethods;
     }
 
