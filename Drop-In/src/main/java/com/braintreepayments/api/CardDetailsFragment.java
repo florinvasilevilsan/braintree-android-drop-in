@@ -150,11 +150,11 @@ public class CardDetailsFragment extends DropInFragment implements OnCardFormSub
                 if (formErrors.errorFor("expirationYear") != null ||
                         formErrors.errorFor("expirationMonth") != null ||
                         formErrors.errorFor("expirationDate") != null) {
-                    cardForm.setExpirationError(requireContext().getString(R.string.bt_expiration_invalid));
+                    cardForm.setExpirationError(requireContext().getString(com.braintreepayments.cardform.R.string.bt_expiration_invalid));
                 }
 
                 if (formErrors.errorFor("cvv") != null) {
-                    cardForm.setCvvError(requireContext().getString(R.string.bt_cvv_invalid,
+                    cardForm.setCvvError(requireContext().getString(com.braintreepayments.cardform.R.string.bt_cvv_invalid,
                             requireContext().getString(
                                     cardForm.getCardEditText().getCardType().getSecurityCodeName())));
                 }

@@ -158,7 +158,7 @@ public class AddCardFragment extends DropInFragment implements OnCardFormSubmitL
             BraintreeError formErrors = errors.errorFor("creditCard");
             if (formErrors != null) {
                 if (formErrors.errorFor("number") != null) {
-                    cardForm.setCardNumberError(requireContext().getString(R.string.bt_card_number_invalid));
+                    cardForm.setCardNumberError(requireContext().getString(com.braintreepayments.cardform.R.string.bt_card_number_invalid));
                 }
             }
         }

@@ -160,7 +160,7 @@ public class DropInActivity extends AppCompatActivity {
     }
 
     private void onSupportedPaymentMethodSelected(DropInEvent event) {
-        if (getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
+        if (getLifecycle().getCurrentState() != Lifecycle.State.RESUMED) {
             DropInPaymentMethod paymentMethodType =
                     event.getDropInPaymentMethodType(DropInEventProperty.SUPPORTED_PAYMENT_METHOD);
             startPaymentFlow(paymentMethodType);

@@ -3,7 +3,7 @@ plugins {
     // id 'de.marcphilipp.nexus-publish'
     // id 'signing'
     id 'kotlin-android'
-    id 'org.jetbrains.dokka'
+    // id 'org.jetbrains.dokka'
 }
 
 ext["signing.keyId"] = System.getenv('SIGNING_KEY_ID') ?: ''
@@ -14,7 +14,7 @@ ext["signing.secretKeyRingFile"] = System.getenv('SIGNING_KEY_FILE') ?: ''
 // def GATEWAY_IP = System.properties['GATEWAY_IP'] ?: '"10.0.2.2"';
 // def GATEWAY_PORT = System.properties['GATEWAY_PORT'] ?: '"3000"';
 
-ext['brainTreeVersion'] = "4.23.1"
+ext['brainTreeVersion'] = "4.48.0"
 
 ext['deps'] = [
     "braintreeCore" : "com.braintreepayments.api:braintree-core:" + ext['brainTreeVersion'],
@@ -105,30 +105,27 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
+    // testImplementation 'androidx.test:rules:1.4.0'
+    // testImplementation 'androidx.test:runner:1.4.0'
+    // testImplementation 'androidx.test:core:1.4.0'
 
-    // testImplementation 'org.powermock:powermock-module-junit4:1.6.6'
-    // testImplementation 'org.powermock:powermock-module-junit4-rule:1.6.6'
-    // testImplementation 'org.powermock:powermock-api-mockito:1.6.6'
-    // testImplementation 'org.powermock:powermock-classloading-xstream:1.6.6'
+    // testImplementation 'junit:junit:4.13'
     // testImplementation 'org.robolectric:robolectric:4.7.3'
     // testImplementation 'org.skyscreamer:jsonassert:1.4.0'
 
-    // testImplementation "androidx.core:core-ktx:1.6.0"
-    // testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10"
-    // testImplementation "androidx.test:core:1.4.0"
+    // testImplementation 'androidx.core:core-ktx:1.6.0'
+    // testImplementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10'
+    // testImplementation 'androidx.test:core:1.4.0'
     // testImplementation 'androidx.work:work-testing:2.5.0'
     // testImplementation 'io.mockk:mockk:1.12.0'
+    // testImplementation 'org.mockito:mockito-core:5.2.0'
 
     // androidTestImplementation 'androidx.test:rules:1.4.0'
     // androidTestImplementation 'androidx.test:runner:1.4.0'
     // androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     // androidTestImplementation 'androidx.fragment:fragment-testing:1.3.5'
     // androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
-    // androidTestCompileOnly 'org.powermock:powermock-module-junit4:1.6.6'
-    // androidTestCompileOnly 'org.powermock:powermock-module-junit4-rule:1.6.6'
-    // androidTestCompileOnly 'org.powermock:powermock-api-mockito:1.6.6'
-    // androidTestCompileOnly 'org.powermock:powermock-classloading-xstream:1.6.6'
+    // androidTestImplementation 'org.mockito:mockito-core:5.2.0'
 }
 
 // region signing and publishing
@@ -220,6 +217,6 @@ project.ext.group_id = "com.braintreepayments.api"
 project.ext.version = rootProject.version
 project.ext.pom_desc = "Drop-in payment form for Braintree\'s Android SDK. Integrate this library to add a readymade UI for your payments."
 
-apply from: rootProject.file("gradle/gradle-publish.gradle")
+// apply from: rootProject.file("gradle/gradle-publish.gradle")
 
 // endregion

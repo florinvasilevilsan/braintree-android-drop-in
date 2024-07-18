@@ -15,7 +15,7 @@ class AlertPresenter {
         dialogView.setPaymentMethod(paymentMethodNonceToDelete, false);
 
         new AlertDialog.Builder(context,
-                R.style.Theme_AppCompat_Light_Dialog_Alert)
+                androidx.appcompat.R.style.Theme_AppCompat_Light_Dialog_Alert)
                 .setTitle(R.string.bt_delete_confirmation_title)
                 .setMessage(R.string.bt_delete_confirmation_description)
                 .setView(dialogView)
